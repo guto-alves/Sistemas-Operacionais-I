@@ -5,18 +5,28 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import processos.ex03.controller.ActionListenerCancel;
+import processos.ex03.controller.ActionListenerOK;
+import processos.ex03.controller.ActionListenerSearch;
+
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import java.awt.Font;
 
 public class Frame extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField textField;
+	private JButton btnOK;
 
 	/**
 	 * Launch the application.
@@ -71,25 +81,47 @@ public class Frame extends JFrame {
 
 		textField = new JTextField();
 		textField.setBounds(76, 69, 306, 23);
-		contentPane.add(textField);
 		textField.setColumns(10);
+		textField.addActionListener(new ActionListenerOK(textField, this));
+		textField.addKeyListener(new KeyListener() {
 
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 109, 409, 77);
-		contentPane.add(panel);
-		panel.setLayout(null);
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
 
-		JButton btnOK = new JButton("OK");
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (textField.getText().isEmpty())
+					btnOK.setEnabled(false);
+				else
+					btnOK.setEnabled(true);
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+		contentPane.add(textField);
+
+		JPanel panelButtons = new JPanel();
+		panelButtons.setBounds(0, 109, 409, 77);
+		panelButtons.setLayout(null);
+		contentPane.add(panelButtons);
+
+		btnOK = new JButton("OK");
 		btnOK.setEnabled(false);
 		btnOK.setBounds(74, 22, 89, 23);
-		panel.add(btnOK);
+		btnOK.addActionListener(new ActionListenerOK(textField, this));
+		panelButtons.add(btnOK);
 
 		JButton btnCancel = new JButton("Cancelar");
 		btnCancel.setBounds(173, 22, 89, 23);
-		panel.add(btnCancel);
+		btnCancel.addActionListener(new ActionListenerCancel(this));
+		panelButtons.add(btnCancel);
 
 		JButton btnSearch = new JButton("Procurar...");
 		btnSearch.setBounds(272, 22, 89, 23);
-		panel.add(btnSearch);
+		btnSearch.addActionListener(new ActionListenerSearch(this, textField, btnOK));
+		panelButtons.add(btnSearch);
 	}
 }

@@ -26,9 +26,9 @@ public class KillProcessListener implements ActionListener {
 
 		if (!process.isEmpty()) {
 			if (nameRadioButton.isSelected())
-				controller.killProcess(controller.getOS(), process);
+				controller.killProcess(process);
 			else
-				controller.killProcess(controller.getOS(), process);
+				controller.killProcess(process);
 
 			textField.setText("");
 			JOptionPane.showMessageDialog(null, "Fatality!");

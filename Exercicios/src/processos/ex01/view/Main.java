@@ -12,11 +12,10 @@ public class Main {
 		int option = 0;
 
 		do {
-			String input = JOptionPane
-					.showInputDialog("Hello! enter the action number:\n\n1 - Get Ethernet Adapter and IPv4.\n"
-							+ "2 - Get Ping from a web page.\n" + "9 - Exit");
+			String input = JOptionPane.showInputDialog(
+					"Digite o número da opção:\n\n1 - Adaptadores ethernet e IPv4.\n" + "2 - Ping.\n" + "9 - Sair.");
 
-			if (isInteger(input)) {
+			if (isValidInput(input)) {
 				option = Integer.parseInt(input);
 
 				switch (option) {
@@ -29,17 +28,17 @@ public class Main {
 				case 9:
 					break;
 				default:
-					JOptionPane.showMessageDialog(null, "Invalid option!", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Opção inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 			} else
-				JOptionPane.showMessageDialog(null, "Please, enter the option number!", "Error",
+				JOptionPane.showMessageDialog(null, "Por favor, digite o número da opção!", "Erro",
 						JOptionPane.ERROR_MESSAGE);
 
 		} while (option != 9);
 	}
 
-	private static boolean isInteger(String option) {
+	private static boolean isValidInput(String option) {
 		return option.matches("\\d");
 	}
 }

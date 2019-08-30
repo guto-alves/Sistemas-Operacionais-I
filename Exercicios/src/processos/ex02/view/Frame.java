@@ -1,20 +1,20 @@
 package processos.ex02.view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
-import processos.ex02.controller.ProcessController;
+import processos.ex02.controller.KillProcessListener;
+import processos.ex02.controller.UpdateTableListener;
 
 import java.awt.FlowLayout;
 import java.awt.Dimension;
@@ -23,11 +23,14 @@ import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
+import java.awt.BorderLayout;
 
 public class Frame extends JFrame {
 	private JPanel contentPane;
-	private JTextArea processesTextArea;
 	private JTextField nameOrPIDTextField;
+	private JTable table;
+	private DefaultTableModel tableModel = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -49,29 +52,30 @@ public class Frame extends JFrame {
 	 * Create the frame.
 	 */
 	public Frame() {
-		setSize(new Dimension(450, 600));
+		setTitle("Process Killer");
+		setSize(new Dimension(750, 600));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		processesTextArea = new JTextArea();
-		processesTextArea.setAutoscrolls(true);
-		processesTextArea.setBounds(0, 5, 434, 401);
-		contentPane.add(processesTextArea);
+		JPanel tablePanel = new JPanel();
+		tablePanel.setBounds(10, 11, 711, 396);
+		tablePanel.setLayout(new BorderLayout(0, 0));
+		contentPane.add(tablePanel);
+
+		table = new JTable(tableModel);
+		tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		JButton refreshButton = new JButton("");
 		refreshButton.setBackground(Color.WHITE);
 		refreshButton.setIcon(new ImageIcon(Frame.class.getResource("/processos/ex02/image/refresh.png")));
 		refreshButton.setBounds(357, 408, 53, 53);
-		refreshButton.addActionListener(event -> {
-			String result = new ProcessController().listAllProcess(ProcessController.WINDOWS_OS);
-			processesTextArea.setText(result);
-		});
+		refreshButton.addActionListener(new UpdateTableListener(tableModel));
 		contentPane.add(refreshButton);
 
 		JPanel killZonePanel = new JPanel();
@@ -79,10 +83,10 @@ public class Frame extends JFrame {
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "KILL ZONE",
 				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(255, 255, 255)));
 		killZonePanel.setBackground(new Color(255, 0, 0));
-		killZonePanel.setBounds(0, 465, 434, 96);
+		killZonePanel.setBounds(0, 465, 744, 96);
 		contentPane.add(killZonePanel);
 
-		JLabel matarProcessoLabel = new JLabel("Matar Processo:");
+		JLabel matarProcessoLabel = new JLabel("Processo:");
 		matarProcessoLabel.setFont(new Font("Calibri Light", Font.PLAIN, 14));
 		matarProcessoLabel.setForeground(Color.WHITE);
 		killZonePanel.add(matarProcessoLabel);
@@ -100,6 +104,7 @@ public class Frame extends JFrame {
 		radioButtonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JRadioButton rdbtnNome = new JRadioButton("Nome");
+		rdbtnNome.setSelected(true);
 		radioButtonsPanel.add(rdbtnNome);
 
 		JRadioButton rdbtnPid = new JRadioButton("PID");
@@ -107,5 +112,10 @@ public class Frame extends JFrame {
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnPid);
 		group.add(rdbtnNome);
+
+		JButton killProcessButton = new JButton("");
+		killProcessButton.setIcon(new ImageIcon(Frame.class.getResource("/processos/ex02/image/death.png")));
+		killProcessButton.addActionListener(new KillProcessListener(nameOrPIDTextField, rdbtnNome, rdbtnPid));
+		killZonePanel.add(killProcessButton);
 	}
 }
