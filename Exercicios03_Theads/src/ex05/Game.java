@@ -5,22 +5,18 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class Game extends MouseAdapter implements Listener {
 	private final int TOTAL_FIGURES = 3;
 	private Figure[] figures = new Figure[TOTAL_FIGURES];
 
 	private boolean running = false;
-	private int conterOfFiguresRunning = 0;
+	private int counterOfFigures = 0;
 
-	private JTextField[] textFields;
-
-	public Game(JTextField... textFields) {
-		this.textFields = textFields;
-
+	public Game(JLabel... labels) {
 		for (int i = 0; i < TOTAL_FIGURES; i++)
-			figures[i] = new Figure(textFields[i], this);
+			figures[i] = new Figure(labels[i], this);
 	}
 
 	public void start() {
@@ -36,12 +32,12 @@ public class Game extends MouseAdapter implements Listener {
 
 	public void stop() {
 		running = false;
-		conterOfFiguresRunning = 0;
+		counterOfFigures = 0;
 	}
 
 	@Override
 	public void finished() {
-		if (++conterOfFiguresRunning == textFields.length)
+		if (++counterOfFigures == TOTAL_FIGURES)
 			stop();
 	}
 
