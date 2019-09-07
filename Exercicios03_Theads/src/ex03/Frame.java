@@ -49,7 +49,7 @@ public class Frame extends JFrame {
 		pistaPanel.setLayout(null);
 
 		JLabel bandeiraLabel = new JLabel();
-		bandeiraLabel.setIcon(new ImageIcon(Frame.class.getResource("/ex03/chegada.gif")));
+		bandeiraLabel.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/chegada.gif")));
 		bandeiraLabel.setBounds(703, 0, 171, 172);
 		pistaPanel.add(bandeiraLabel);
 

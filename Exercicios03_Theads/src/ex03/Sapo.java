@@ -11,7 +11,7 @@ public class Sapo implements Runnable {
 	public static final String COR_PRETO = "Preto";
 	public static final String COR_LARANJA = "Laranja";
 
-	private final int SALTO_MAX = 15;
+	private final int SALTO_MAX = 60;
 
 	private JLabel sapoLabel;
 	private String cor;
@@ -39,18 +39,16 @@ public class Sapo implements Runnable {
 
 			int salto = random.nextInt(SALTO_MAX);
 
-			x += salto;
-
 			sapoLabel.setBounds(x + salto, sapoLabel.getY(), sapoLabel.getWidth(), sapoLabel.getHeight());
 
-			if (x > Corrida.FIM_CORRIDA) {
+			if (x >= Corrida.FIM_CORRIDA) {
 				sapoLabel.setVisible(false);
 				listener.terminei(this);
 				break;
 			}
 
 			try {
-				Thread.sleep(100);
+				Thread.sleep(250);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				e.printStackTrace();
