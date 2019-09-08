@@ -17,19 +17,18 @@ public class ThreadCarro extends Thread {
 	public void run() {
 		carroAndando();
 		try {
-			semaphore.acquire();
-
-			if (semaphore.getQueueLength() > 3)
+			if (!semaphore.tryAcquire()) {
 				System.out.println("Carro #" + idCarro + " na fila");
+				semaphore.acquire();
+			}
 
 			carroEstacionado();
+			carroSaindo();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			semaphore.release();
 		}
-
-		carroSaindo();
 	}
 
 	private void carroAndando() {
@@ -39,7 +38,7 @@ public class ThreadCarro extends Thread {
 		int variacaoDistancia = 100;
 		int tempo = 100;
 
-		while (distanciaPercorrida < distanciaFinal) {
+		while (distanciaPercorrida <= distanciaFinal) {
 			distanciaPercorrida += variacaoDistancia;
 			try {
 				Thread.sleep(tempo);
