@@ -1,4 +1,4 @@
-package ex03;
+package ex03_version2;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -32,7 +32,7 @@ public class Frame extends JFrame {
 	}
 
 	public Frame() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Frame.class.getResource("/ex03/images/icon.jpg")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Frame.class.getResource("/ex03_version2/images/icon.jpg")));
 		setTitle("Corrida de Sapos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(900, 700);
@@ -49,7 +49,7 @@ public class Frame extends JFrame {
 		pistaPanel.setLayout(null);
 
 		JLabel bandeiraLabel = new JLabel();
-		bandeiraLabel.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/chegada.gif")));
+		bandeiraLabel.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/chegada.gif")));
 		bandeiraLabel.setBounds(703, 0, 171, 172);
 		pistaPanel.add(bandeiraLabel);
 
@@ -59,27 +59,27 @@ public class Frame extends JFrame {
 		pistaPanel.add(linhaChegadaPanel);
 
 		JLabel sapo1Label = new JLabel();
-		sapo1Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/frog.gif")));
+		sapo1Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/frog.gif")));
 		sapo1Label.setBounds(10, 145, 100, 73);
 		pistaPanel.add(sapo1Label);
 
 		JLabel sapo2Label = new JLabel();
-		sapo2Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/frog.gif")));
+		sapo2Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/frog.gif")));
 		sapo2Label.setBounds(10, 229, 100, 73);
 		pistaPanel.add(sapo2Label);
 
 		JLabel sapo3Label = new JLabel();
-		sapo3Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/frog.gif")));
+		sapo3Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/frog.gif")));
 		sapo3Label.setBounds(10, 315, 100, 73);
 		pistaPanel.add(sapo3Label);
 
 		JLabel sapo4Label = new JLabel();
-		sapo4Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/frog.gif")));
+		sapo4Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/frog.gif")));
 		sapo4Label.setBounds(10, 414, 100, 73);
 		pistaPanel.add(sapo4Label);
 
 		JLabel sapo5Label = new JLabel();
-		sapo5Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/frog.gif")));
+		sapo5Label.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/frog.gif")));
 		sapo5Label.setBounds(10, 498, 100, 73);
 		pistaPanel.add(sapo5Label);
 
@@ -92,7 +92,7 @@ public class Frame extends JFrame {
 
 		JLabel winningSapoLabel = new JLabel();
 		winningSapoLabel.setBounds(339, 156, 160, 160);
-		winningSapoLabel.setIcon(new ImageIcon(Frame.class.getResource("/ex03/images/winner_frog.gif")));
+		winningSapoLabel.setIcon(new ImageIcon(Frame.class.getResource("/ex03_version2/images/winner_frog.gif")));
 		winningSapoLabel.setVisible(false);
 		pistaPanel.add(winningSapoLabel);
 

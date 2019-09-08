@@ -1,4 +1,4 @@
-package ex03;
+package ex03_version2;
 
 import java.security.SecureRandom;
 
