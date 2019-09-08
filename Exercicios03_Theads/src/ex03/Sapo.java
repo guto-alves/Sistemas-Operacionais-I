@@ -41,7 +41,7 @@ public class Sapo implements Runnable {
 
 			sapoLabel.setBounds(x + salto, sapoLabel.getY(), sapoLabel.getWidth(), sapoLabel.getHeight());
 
-			if (x >= Corrida.FIM_CORRIDA) {
+			if (x + sapoLabel.getWidth() >= Corrida.FIM_CORRIDA) {
 				sapoLabel.setVisible(false);
 				listener.terminei(this);
 				break;
