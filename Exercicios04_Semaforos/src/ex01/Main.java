@@ -11,10 +11,8 @@ public class Main {
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
 
-		for (int id = 1; id <= 4; id++) {
-			People people = new People(id, semaphore);
-			executorService.execute(people);
-		}
+		for (int id = 1; id <= 4; id++)
+			executorService.execute(new People(id, semaphore));
 
 		executorService.shutdown();
 	}
