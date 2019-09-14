@@ -16,8 +16,6 @@ import javax.swing.border.LineBorder;
 
 public class Frame extends JFrame {
 	private JPanel contentPane;
-	private JTextField winnerTextField;
-	private JTextField loserTextField;
 
 	/**
 	 * Launch the application.
@@ -74,36 +72,37 @@ public class Frame extends JFrame {
 		controlPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		controlPanel.setBackground(Color.WHITE);
 		controlPanel.setBounds(0, 221, 684, 90);
-		contentPane.add(controlPanel);
 		controlPanel.setLayout(null);
+		contentPane.add(controlPanel);
 
 		JButton runButton = new JButton("Correr");
 		runButton.setBounds(146, 27, 72, 31);
 		controlPanel.add(runButton);
 
-		loserTextField = new JTextField();
-		loserTextField.setBounds(372, 53, 96, 20);
-		controlPanel.add(loserTextField);
-		loserTextField.setHorizontalAlignment(JTextField.CENTER);
-		loserTextField.setEditable(false);
-		loserTextField.setColumns(10);
+		JLabel lblVencedor = new JLabel("Vencedor");
+		lblVencedor.setForeground(Color.GREEN);
+		lblVencedor.setBounds(310, 25, 64, 14);
+		controlPanel.add(lblVencedor);
+
+		JTextField winnerTextField = new JTextField();
+		winnerTextField.setBounds(372, 22, 96, 20);
+		winnerTextField.setHorizontalAlignment(JTextField.CENTER);
+		winnerTextField.setEditable(false);
+		winnerTextField.setColumns(10);
+		controlPanel.add(winnerTextField);
 
 		JLabel lblPerdedor = new JLabel("Perdedor");
 		lblPerdedor.setForeground(Color.RED);
 		lblPerdedor.setBounds(310, 53, 64, 14);
 		controlPanel.add(lblPerdedor);
 
-		winnerTextField = new JTextField();
-		winnerTextField.setBounds(372, 22, 96, 20);
-		controlPanel.add(winnerTextField);
-		winnerTextField.setHorizontalAlignment(JTextField.CENTER);
-		winnerTextField.setEditable(false);
-		winnerTextField.setColumns(10);
-		runButton.addActionListener(new Race(car1Label, car2Label, runButton, winnerTextField, loserTextField));
+		JTextField loserTextField = new JTextField();
+		loserTextField.setBounds(372, 53, 96, 20);
+		loserTextField.setHorizontalAlignment(JTextField.CENTER);
+		loserTextField.setEditable(false);
+		loserTextField.setColumns(10);
+		controlPanel.add(loserTextField);
 
-		JLabel lblVencedor = new JLabel("Vencedor");
-		lblVencedor.setForeground(Color.GREEN);
-		lblVencedor.setBounds(310, 25, 64, 14);
-		controlPanel.add(lblVencedor);
+		runButton.addActionListener(new Race(car1Label, car2Label, runButton, winnerTextField, loserTextField));
 	}
 }

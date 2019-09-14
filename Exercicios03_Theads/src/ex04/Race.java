@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Race implements ActionListener, FinishedRaceListener {
-	public static final int DISTANCIA = 600;
+	public static final int DISTANCIA_FINAL = 621;
 	private static final int TOTAL_CARROS = 2;
 
 	private JLabel car1Label, car2Label;

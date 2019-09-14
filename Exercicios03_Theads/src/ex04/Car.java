@@ -31,19 +31,14 @@ public class Car implements Runnable {
 	public void run() {
 		SecureRandom random = new SecureRandom();
 
-		while (true) {
-			Rectangle rectangle = carLabel.getBounds();
+		Rectangle rectangle = carLabel.getBounds();
 
-			int aceleracao = random.nextInt(velocidadeMaxima);
+		while (rectangle.x + rectangle.width < Race.DISTANCIA_FINAL) {
+			int deslocamento = random.nextInt(velocidadeMaxima);
 
-			rectangle.x += aceleracao;
+			rectangle.x += deslocamento;
 
 			carLabel.setBounds(rectangle);
-
-			if (rectangle.x >= Race.DISTANCIA) {
-				finishedRaceListener.finished(this);
-				break;
-			}
 
 			try {
 				Thread.sleep(100);
@@ -53,6 +48,7 @@ public class Car implements Runnable {
 			}
 		}
 
+		finishedRaceListener.finished(this);
 	}
 
 }
