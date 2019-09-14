@@ -40,7 +40,7 @@ public class Figure implements Runnable {
 
 		for (int i = 0; i < giros; i++) {
 			try {
-				Thread.sleep(giros - i <= 3 ? 250 : 100);
+				Thread.sleep(giros - i <= 3 ? 150 : 50);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				e.printStackTrace();
