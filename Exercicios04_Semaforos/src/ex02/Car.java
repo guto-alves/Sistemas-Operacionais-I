@@ -9,64 +9,54 @@ import javax.swing.JLabel;
 import ex02.StreetController.Direction;
 
 public class Car implements Runnable {
+	private final SecureRandom random = new SecureRandom();
+
 	private Direction direction;
 	private JLabel carJLabel;
+	private Rectangle carRectangle;
+
 	private Semaphore semaphore;
 
-	public Car(Direction direction, JLabel carJLabel, Semaphore semaphore) {
+	private Listener listener;
+
+	public Car(Direction direction, JLabel carJLabel, Semaphore semaphore, Listener listener) {
 		this.direction = direction;
 		this.carJLabel = carJLabel;
 		this.semaphore = semaphore;
+		this.listener = listener;
+
+		carRectangle = carJLabel.getBounds();
 	}
 
 	@Override
 	public void run() {
-		walk();
+		runNormal();
 
 		try {
 			semaphore.acquire();
-			passarNaFixaDePedestre();
+			runInTheCrosswalk();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			semaphore.release();
 		}
+
+		runNormal();
 	}
 
-	private void walk() {
-		SecureRandom random = new SecureRandom();
+	private void runNormal() {
+		while (!isIntersection()) {
+			move(random.nextInt(4) + 5);
 
-		int travelledDistance = 0;
+			carJLabel.setBounds(carRectangle);
 
-		Rectangle rectangle;
-
-		while (true) {
-			rectangle = carJLabel.getBounds();
-
-			travelledDistance += random.nextInt(2) + 1;
-
-			switch (direction) {
-			case RIGHT:
-				rectangle.x += travelledDistance;
-				break;
-			case UP:
-				rectangle.y -= travelledDistance;
-				break;
-			case LEFT:
-				rectangle.x -= travelledDistance;
-				break;
-			case DOWN:
-				rectangle.y += travelledDistance;
+			if (isFinish()) {
+				listener.callback();
 				break;
 			}
 
-			carJLabel.setBounds(rectangle);
-
-			if (isFaixa(rectangle))
-				break;
-
 			try {
-				Thread.sleep(200);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				e.printStackTrace();
@@ -74,47 +64,43 @@ public class Car implements Runnable {
 		}
 	}
 
-	private void passarNaFixaDePedestre() {
-		SecureRandom random = new SecureRandom();
+	private void runInTheCrosswalk() {
+		while (isIntersection()) {
+			move(random.nextInt(2) + 3);
 
-		int travelledDistance = 0;
-
-		Rectangle rectangle;
-
-		while (isFaixa(rectangle = carJLabel.getBounds())) {
-			travelledDistance += random.nextInt(2) + 3;
+			carJLabel.setBounds(carRectangle);
 
 			try {
-				Thread.sleep(350);
+				Thread.sleep(60);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				e.printStackTrace();
 			}
-
-			switch (direction) {
-			case RIGHT:
-				rectangle.x += travelledDistance;
-				break;
-			case UP:
-				rectangle.y -= travelledDistance;
-				break;
-			case LEFT:
-				rectangle.x -= travelledDistance;
-				break;
-			case DOWN:
-				rectangle.y += travelledDistance;
-				break;
-			}
-
-			carJLabel.setBounds(rectangle);
 		}
 	}
 
-	private boolean isFaixa(Rectangle rectangle) {
-		if ((rectangle.x >= 200 && rectangle.x <= 320) && (rectangle.y >= 150 && rectangle.y <= 260))
-			return true;
-		else
-			return false;
+	private void move(int displacement) {
+		switch (direction) {
+		case RIGHT:
+			carRectangle.x += displacement;
+			break;
+		case UP:
+			carRectangle.y -= displacement;
+			break;
+		case LEFT:
+			carRectangle.x -= displacement;
+			break;
+		case DOWN:
+			carRectangle.y += displacement;
+			break;
+		}
 	}
 
+	private boolean isIntersection() {
+		return carRectangle.intersects(StreetController.intersectionRectangle);
+	}
+
+	private boolean isFinish() {
+		return carRectangle.x < -100 || carRectangle.x > 700 || carRectangle.y < -100 || carRectangle.y > 700;
+	}
 }
