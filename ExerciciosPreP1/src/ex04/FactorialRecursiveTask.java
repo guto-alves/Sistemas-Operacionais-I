@@ -1,3 +1,4 @@
+package ex04;
 
 public class FactorialRecursiveTask implements Runnable {
 	private int number;
